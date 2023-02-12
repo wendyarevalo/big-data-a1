@@ -24,9 +24,17 @@ are installed and running follow these steps:
    ```
 4. Creation of tables
    ```
-   tbd
+   CREATE TABLE reddit.comments_upvotes (
+   id text PRIMARY KEY,
+   created_utc timestamp,
+   ups int,
+   author text,
+   subreddit text,
+   score int
+   );
    ```
 5. Insertion directly through shell
    ```
-   tbd
+   INSERT INTO reddit.comments_upvotes (id, created_utc, ups, author, subreddit, score)
+   VALUES ('12345', '2022-01-01 12:00:00', 100, 'john_doe', 'r/Cassandra', 1000);
    ```
