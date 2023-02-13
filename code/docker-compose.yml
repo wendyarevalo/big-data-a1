@@ -17,16 +17,20 @@ services:
   cassandra1:
     image: cassandra
     hostname: cassandra1
+    container_name: cassandra1
     environment: 
       <<: *cassandras
       CASSANDRA_DC: DC1   
     expose: *exposes
+    volumes:
+      - ./conf_cassandra.cql:/conf_cassandra.cql
     ports: 
       - "9042:9042"
 
   cassandra2:
     image: cassandra
     hostname: cassandra2
+    container_name: cassandra2
     environment: 
       <<: *cassandras
       CASSANDRA_DC: DC1   
@@ -41,6 +45,7 @@ services:
   cassandra3:
     image: cassandra
     hostname: cassandra3
+    container_name: cassandra3
     environment: 
       <<: *cassandras
       CASSANDRA_DC: DC2 
