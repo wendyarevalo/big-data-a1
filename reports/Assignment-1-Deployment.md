@@ -8,7 +8,8 @@ are installed and running, follow these steps:
 
 1. Start the containers:
     ```
-    docker-compose up
+   cd cassandra 
+   docker-compose up
     ```
 2. After some seconds, run the following command to add a
    key space, and a table:
