@@ -8,7 +8,7 @@ are installed and running, follow these steps:
 
 1. Start the containers:
     ```
-   cd cassandra 
+   cd code/coredms 
    docker-compose up
     ```
 2. After some seconds, run the following command to add a

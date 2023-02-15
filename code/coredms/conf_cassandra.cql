@@ -7,12 +7,13 @@ WITH REPLICATION = {
 };
 
 CREATE TABLE reddit.comments_upvotes (
-    id text PRIMARY KEY,
     created_utc timestamp,
     ups int,
-    author text,
     subreddit text,
-    score int
+    id text PRIMARY KEY,
+    author text,
+    score int,
+    body text
 );
 
 CONSISTENCY QUORUM;
