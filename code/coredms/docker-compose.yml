@@ -26,6 +26,8 @@ services:
       - ./conf_cassandra.cql:/conf_cassandra.cql
     ports: 
       - "9042:9042"
+    networks:
+      - bigdata
 
   cassandra2:
     image: cassandra
@@ -40,6 +42,8 @@ services:
     restart: always
     depends_on: 
       - cassandra1
+    networks:
+      - bigdata
     
 
   cassandra3:
@@ -51,8 +55,13 @@ services:
       CASSANDRA_DC: DC2 
     expose: *exposes
     restart: always
-  
     depends_on: 
       - cassandra1    
     ports: 
       - "9044:9042"
+    networks:
+      - bigdata
+
+networks:
+  bigdata:
+    name: bigdata-network

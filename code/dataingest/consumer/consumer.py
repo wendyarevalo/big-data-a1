@@ -4,7 +4,7 @@ import pika
 import sys
 from cassandra.cluster import Cluster
 
-cluster = Cluster(['localhost'])
+cluster = Cluster(['cassandra1'])
 session = cluster.connect()
 session.execute("CREATE KEYSPACE IF NOT EXISTS reddit WITH REPLICATION = "
                 "{'class': 'SimpleStrategy', "
@@ -21,7 +21,7 @@ session.execute("CREATE TABLE IF NOT EXISTS comments_upvotes ("
 
 
 def main():
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbit'))
     channel = connection.channel()
 
     channel.queue_declare(queue='comments')

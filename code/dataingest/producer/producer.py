@@ -2,12 +2,12 @@ import csv
 import pika
 import json
 
-with open('../../data/small_sample_reddit_comments.csv', 'r') as csvfile:
+with open('data/sample.csv', 'r') as csvfile:
     csvreader = csv.reader(csvfile)
 
     next(csvreader)
 
-    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters('rabbit'))
     channel = connection.channel()
 
     channel.queue_declare(queue='comments')

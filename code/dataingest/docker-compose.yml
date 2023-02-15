@@ -1,0 +1,39 @@
+version: '3'
+services:
+  rabbitmq:
+    image: rabbitmq:3.11-management
+    container_name: rabbit
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - bigdata
+
+  consumer1:
+    image: consumer
+    container_name: consumer1
+    depends_on:
+      - rabbitmq
+    networks:
+      - bigdata
+
+  consumer2:
+    image: consumer
+    container_name: consumer2
+    depends_on:
+      - rabbitmq
+    networks:
+      - bigdata
+
+  consumer3:
+    image: consumer
+    container_name: consumer3
+    depends_on:
+      - rabbitmq
+    networks:
+      - bigdata
+
+networks:
+  bigdata:
+    name: bigdata-network
+    external: true
