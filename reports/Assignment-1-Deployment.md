@@ -18,6 +18,6 @@ are installed and running, follow these steps:
    ```
 3. If desired, insertion directly through cqlsh should be done like this:
    ```
-   INSERT INTO reddit.comments_upvotes (id, created_utc, ups, author, subreddit, score)
-   VALUES ('12345', '2022-01-01 12:00:00', 100, 'john_doe', 'r/Cassandra', 1000);
+   INSERT INTO reddit.comments_upvotes (id, created_utc, ups, author, subreddit, score, body)
+   VALUES ('12345', '1430438437', 100, 'john_doe', 'r/Cassandra', 1000, 'some message');
    ```
