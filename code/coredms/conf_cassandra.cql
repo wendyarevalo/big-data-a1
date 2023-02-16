@@ -6,7 +6,7 @@ WITH REPLICATION = {
   'replication_factor' : 3
 };
 
-CREATE TABLE reddit.comments_upvotes (
+CREATE TABLE reddit.comments_by_upvotes (
     created_utc timestamp,
     ups int,
     subreddit text,
