@@ -1,13 +1,5 @@
 version: '3'
 services:
-  rabbitmq:
-    image: rabbitmq:3.11-management
-    container_name: rabbit
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    networks:
-      - bigdata
 
   consumer1:
     image: consumer
@@ -30,6 +22,25 @@ services:
     container_name: consumer3
     depends_on:
       - rabbitmq
+    networks:
+      - bigdata
+
+  daas:
+    image: daas
+    container_name: daas
+    ports:
+      - "8000:8000"
+    depends_on:
+      - rabbitmq
+    networks:
+      - bigdata
+
+  rabbitmq:
+    image: rabbitmq:3.11-management
+    container_name: rabbit
+    ports:
+      - "5672:5672"
+      - "15672:15672"
     networks:
       - bigdata
 

@@ -7,7 +7,7 @@ with open('data/sample.csv', 'r') as csvfile:
 
     next(csvreader)
 
-    connection = pika.BlockingConnection(pika.ConnectionParameters('rabbit'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbit'))
     channel = connection.channel()
 
     channel.queue_declare(queue='comments')
