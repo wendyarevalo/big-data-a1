@@ -10,23 +10,13 @@ session = cluster.connect()
 session.set_keyspace('reddit')
 
 
-@app.route('/comments_by_id', methods=['GET'])
-def get_comments_by_id():
+@app.route('/comments_by_subreddit', methods=['GET'])
+def get_comments_by_subreddit():
      data = []
-     rows = session.execute('SELECT * FROM comments_upvotes')
+     rows = session.execute('SELECT * FROM comments_by_subreddit')
      for row in rows:
         data.append(row)
      return jsonify(data)
-
-@app.route('/comments_by_author', methods=['GET'])
-def get_comments_by_author():
-    data = []
-    return jsonify(data)
-
-@app.route('/comments_by_upvotes', methods=['GET'])
-def get_comments_by_upvotes():
-    data = []
-    return jsonify(data)
 
 @app.route('/comments', methods=['POST'])
 def create_comments():

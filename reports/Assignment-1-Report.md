@@ -1,10 +1,5 @@
 # Report
 
-* your designs
-* your answers to questions in the assignment
-* your test results
-* etc.
-
 ## Design
 For simplicity, I did not implement my platform in any cloud, I used docker containers connected through a docker network.
 
@@ -37,13 +32,11 @@ mysimbdp-daas is a simple REST API in Flask and RabbitMQ that receives requests 
 * A POST request produces a message to the same queue that consumers from dataingest are using.
 * A GET request asks the database for data and shows it in json format.
 
-This part is not fully implemented since the consumers are not getting the messages.
-
 ## Answers to the Questions
 
 ### Part 1
 
-1. * Application domain: Reddit comments; evaluate which users have more up votes to identify potential candidates for marketing purposes.
+1. * Application domain: Reddit comments; evaluate which users have more up votes in different subreddits to identify potential candidates for marketing purposes.
    * Data types: A single unit of data includes: text, timestamps and integers. Text for the name of the author, subreddit and content of the comment.
    Timestamp for the creation date of the comment. Integers for the number of up votes and the score of the comment.
    * Reddit is a popular platform which thousands of people use. The dataset used in this design was originally filled using the Reddit API.
@@ -68,20 +61,24 @@ This part is not fully implemented since the consumers are not getting the messa
 ### Part 2
 
 1. My example schema is the following:
-   > comments_by_upvotes
+   > comments_by_subreddit
    > - **created_utc** is a timestamp of the creation date of the comment.
-   > - **ups** is an integer reflectin the number of up votes of the comment
-   > - **subreddit** text, the name of the forum where the comment was posted. 
-   > - **id** an alphanumerical string that identifies the comment, this is the *PRIMARY KEY*, 
+   > - **ups** is an integer reflecting the number of up votes of the comment, this is part of the *Primary Key* and acts as a ***Clustering Key***, and retrieves data in descending order.
+   > - **subreddit** text, the name of the forum where the comment was posted, this is part of the *Primary Key* and acts as a ***Partitioning Key***.
+   > - **id** an alphanumerical string that identifies the comment, this is part of the *Primary Key* and acts as a ***Clustering Key***, and retrieves data in ascending order.
    > - **author** text, the username of the person who wrote the comment 
    > - **score** int, the result of adding up votes and down votes.
    > - **body** text, the content of the comment
-   
-   I am using a keyspace called reddit.
-2. <mark>to complete</mark>
+
+   I am using a keyspace called reddit. In Cassandra schemas are designed for specific queries, I have decided to use this schema since it facilitates the "marketing"
+   purposes I mentioned in my domain. The schema can be seen [here.](../code/coredms/conf_cassandra.cql)
+2. * In Cassandra, partitions are made by partition keys which are used to distribute data evenly among the nodes using hashing techniques. My strategy (explained below) works well with my chosen replication
+    because Cassandra will internally redirect queries to the correct node using the partition key.
+   * My partitioning key is the subreddit of the comment and my clustering keys are the id of the comment and its up votes. I chose this because in Cassandra each table must have only 
+   one purpose to make queries respond faster; my combination allows users to find popular unique comments by subreddit.
 3. * Atomic data element: reddit comment.
-   * To achieve consistency I am using *quorum*, this means my data needs to be stored in the majority of
-   available nodes.
+   * [In Cassandra write operations are always sent to all replicas](https://cassandra.apache.org/doc/4.0/cassandra/architecture/dynamo.html#tunable-consistency). To achieve consistency in responses I am using *quorum*, 
+   this means the majority of the nodes in both datacenters need to respond.
 4. <mark>to complete</mark>
 5. * Adding more nodes to my cluster would help to increase the capacity of the database.
    * If my platform were implemented in a different environment, adding a load balancer would also help to distribute the requests more evenly.
@@ -107,3 +104,5 @@ This part is not fully implemented since the consumers are not getting the messa
 3. <mark>to complete</mark>
 4. <mark>to complete</mark>
 5. <mark>to complete</mark>
+
+### Test results

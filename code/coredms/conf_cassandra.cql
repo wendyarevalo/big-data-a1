@@ -6,14 +6,16 @@ WITH REPLICATION = {
   'replication_factor' : 3
 };
 
-CREATE TABLE reddit.comments_by_upvotes (
+CREATE TABLE reddit.comments_by_subreddit (
     created_utc timestamp,
     ups int,
     subreddit text,
-    id text PRIMARY KEY,
+    id text,
     author text,
     score int,
-    body text
-);
+    body text,
+    PRIMARY KEY ((subreddit, id), ups)
+)
+WITH CLUSTERING ORDER BY (ups DESC);
 
 CONSISTENCY QUORUM;

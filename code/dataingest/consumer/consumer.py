@@ -10,14 +10,17 @@ session.execute("CREATE KEYSPACE IF NOT EXISTS reddit WITH REPLICATION = "
                 "{'class': 'SimpleStrategy', "
                 "'replication_factor': 3}")
 session.set_keyspace('reddit')
-session.execute("CREATE TABLE IF NOT EXISTS comments_upvotes ("
+session.execute("CREATE TABLE IF NOT EXISTS comments_by_subreddit ("
                 "created_utc timestamp,"
                 "ups int,"
                 "subreddit text,"
-                "id text PRIMARY KEY,"
+                "id text,"
                 "author text,"
                 "score int,"
-                "body text)")
+                "body text,"
+                "PRIMARY KEY ((subreddit, id), ups)"
+                ")"
+                "WITH CLUSTERING ORDER BY (ups DESC)")
 
 
 def main():
@@ -38,7 +41,7 @@ def main():
         body = message_data['body']
 
         # Create and execute the CQL INSERT statement
-        insert_query = "INSERT INTO reddit.comments_upvotes (id, created_utc, ups, author, subreddit, score, body) " \
+        insert_query = "INSERT INTO reddit.comments_by_subreddit (id, created_utc, ups, author, subreddit, score, body) " \
                        "VALUES (%s, %s, %s, %s, %s, %s, %s)"
         session.execute(insert_query, (id, created_utc, ups, author, subreddit, score, body))
         ch.basic_ack(delivery_tag=method.delivery_tag)
