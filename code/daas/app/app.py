@@ -33,7 +33,7 @@ def create_comments():
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbit'))
     channel = connection.channel()
 
-    channel.queue_declare(queue='comments')
+    channel.queue_declare(queue='comments', durable=True)
 
     data = request.get_json()
     new_user = {
@@ -46,8 +46,9 @@ def create_comments():
                 'body': data['body']
                 }
     message = json.dumps(new_user)
-    channel.basic_publish(exchange='', routing_key='comments', body=message)
-    connection.close()
+    channel.basic_publish(exchange='', routing_key='comments', body=message, properties=pika.BasicProperties(
+        delivery_mode=pika.spec.PERSISTENT_DELIVERY_MODE))
+    print(" [x] Sent %r" % message)
     return jsonify(new_user)
 
 

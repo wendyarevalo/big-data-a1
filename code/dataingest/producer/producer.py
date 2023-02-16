@@ -10,7 +10,7 @@ with open('data/sample.csv', 'r') as csvfile:
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbit'))
     channel = connection.channel()
 
-    channel.queue_declare(queue='comments')
+    channel.queue_declare(queue='comments', durable=True)
 
     for row in csvreader:
         filtered_row = [row[0], row[1], row[8], row[9], row[14], row[15], row[17]]
@@ -25,6 +25,7 @@ with open('data/sample.csv', 'r') as csvfile:
             'body': filtered_row[6]
         }
         message = json.dumps(data)
-        channel.basic_publish(exchange='', routing_key='comments', body=message)
+        channel.basic_publish(exchange='', routing_key='comments', body=message, properties=pika.BasicProperties(
+        delivery_mode=pika.spec.PERSISTENT_DELIVERY_MODE))
 
     connection.close()

@@ -26,9 +26,12 @@ To insert data manually access any cassandra container and use cqlsh to run this
 To ingest data from CSV to Cassandra cluster I have created producer and consumer containers which are connected to RabbitMQ.
 To run them follow these steps:
 
-1. Start RabbitMQ and 3 consumers:
+1. Start RabbitMQ consumers and daas:
    ```
    docker build -t consumer code/dataingest/consumer/.
+   ```
+   ```
+   docker build -t daas code/daas/app/.
    ```
    ```
    docker-compose -f code/dataingest/docker-compose.yml up
@@ -46,4 +49,29 @@ To run them follow these steps:
    ```
    ```
    docker run --network bigdata-network producer
+   ```
+   
+## daas - Flask API + RabbitMQ
+The daas part of my design is a simple Flask API in python with GET and POST routes.
+This runs automatically when running the dataingest docker compose file since it uses the
+same rabbitMQ connection.
+Unfortunately, the POST route is not sending data to the consumers, I have not solved this problem yet.
+
+1. To test the GET route, use this curl request:
+   ```
+   curl --location 'http://127.0.0.1:8000/comments_by_id'
+   ```
+2. To test the POST route, use this curl request:
+   ```
+   curl --location 'http://127.0.0.1:8000/comments' \
+   --header 'Content-Type: application/json' \
+   --data '{
+   "created_utc": "1430438433",
+   "ups": "1000",
+   "subreddit": "AskReddit",
+   "id": "c123e8e22",
+   "author": "usagi123",
+   "score": "1",
+   "body": "this is a test body"
+   }'
    ```
