@@ -1,5 +1,10 @@
 # Deployment/installation guide
 
+### Prerequisites
+* Docker
+* Docker compose
+* cURL or Postman to try the API
+
 ## coredms - Cassandra
 
 To configure Cassandra, I have used the docker-compose.yml file provided in the tutorial
@@ -24,6 +29,7 @@ To insert data manually access any cassandra container and use cqlsh to run this
 ## dataingest - Python + RabbitMQ
 
 To ingest data from CSV to Cassandra cluster I have created producer and consumer containers which are connected to RabbitMQ.
+Consumer and Producer files are based on tutorials from the RabbitMQ page.
 To run them follow these steps:
 
 1. Start RabbitMQ consumers and daas:
