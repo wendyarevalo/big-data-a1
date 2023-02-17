@@ -119,9 +119,14 @@ mysimbdp-daas is a simple REST API in Flask and RabbitMQ that receives requests 
       > - 5 users: writing took 45 seconds on average.
       > - 10 users: 8 users sent all data. Writing took 108 seconds on average.
       > - 100 users: 1 node down, 1 restarted. None of the users was able to send the data.
+   * Reflection on the results: These direct insertions show that not always having more nodes means higher availability. 
+      Consistency ONE was the fastest in 3 nodes, getting 5 to 41 concurrent users. However, this
+      does not mean is the best choice because we will be getting acknowledment of only one node, and maybe the other ones
+      don't replicate the data correctly. I would stick with my initial configuration with QUORUM since consistency set to ALL is too consuming.
 5. * Adding more nodes to my cluster would help to increase the capacity of the database.
    * If my platform were implemented in a different environment, adding a load balancer would also help to distribute the requests more evenly.
-   * Modifying my dataingest, so it uses a different and more advanced technology instead of RabbitMQ, maybe Kafka.
+   * Automatic scaling would be also an improvement.
+   * Reflecting on my dataingest, even if I didn't test it simultaneously, I would change it to Kafka since it's more adequate to this kind of implementations.
 
 ### Part 3
 
