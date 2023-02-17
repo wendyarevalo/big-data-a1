@@ -123,10 +123,21 @@ mysimbdp-daas is a simple REST API in Flask and RabbitMQ that receives requests 
       Consistency ONE was the fastest in 3 nodes, getting 5 to 41 concurrent users. However, this
       does not mean is the best choice because we will be getting acknowledment of only one node, and maybe the other ones
       don't replicate the data correctly. I would stick with my initial configuration with QUORUM since consistency set to ALL is too consuming.
+   * After analyzing the results I created a script that runs 5, 10 and 100 of producers and tested changing my dataingest producers and consumers. These were the results:
+     > 3 Cassandra nodes, 2 in DC1 and 1 in DC2, 4 consumers.
+     > - 5 producers: 6 seconds on average to complete.
+     > - 10 producers: 11 seconds on average to complete.
+     > - 100 producers: After some time all consumers and rabbit went down, I restarted them manually, soon after 1 Cassandra node went down and another restarted. Some data was sent, but not all.
+
+     > 3 Cassandra nodes, 2 in DC1 and 1 in DC2, 10 consumers.
+     > - 5 producers: 8 seconds on average to complete.
+     > - 10 producers: 22 seconds on average to complete.
+     > - 100 producers: Same case as before, but it took longer to fail.
+
 5. * Adding more nodes to my cluster would help to increase the capacity of the database.
    * If my platform were implemented in a different environment, adding a load balancer would also help to distribute the requests more evenly.
    * Automatic scaling would be also an improvement.
-   * Reflecting on my dataingest, even if I didn't test it simultaneously, I would change it to Kafka since it's more adequate to this kind of implementations.
+   * Reflecting on my dataingest, I would use a RabbitMQ Cluster, more consumers, or I would change it to Kafka since it's more adequate to this kind of implementations.
 
 ### Part 3
 

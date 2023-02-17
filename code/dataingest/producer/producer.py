@@ -1,11 +1,14 @@
 import csv
 import pika
 import json
+import time
 
 with open('data/sample.csv', 'r') as csvfile:
     csvreader = csv.reader(csvfile)
 
     next(csvreader)
+    start=time.time()
+    print(start)
 
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbit'))
     channel = connection.channel()
@@ -30,3 +33,5 @@ with open('data/sample.csv', 'r') as csvfile:
             delivery_mode=pika.spec.PERSISTENT_DELIVERY_MODE))
 
     connection.close()
+    elapsed_time=time.time() - start
+    print('Execution time:', elapsed_time, 'seconds')
