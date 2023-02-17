@@ -1,7 +1,7 @@
 # Report
 
 ## Design
-For simplicity, I did not implement my platform in any cloud, I used docker containers connected through a docker network.
+For simplicity and costs, I did not implement my platform in any cloud, I used docker containers connected through a docker network.
 
 The following diagram shows my intended design:
 
@@ -57,7 +57,8 @@ mysimbdp-daas is a simple REST API in Flask and RabbitMQ that receives requests 
    * Add a RabbitMQ cluster as well, since it will help to avoid failures.
    * Have more consumers, currently I have 4 consumers, increasing to maybe 10 or more would be better.
    * Scale Cassandra horizontally by adding more nodes, and have them in different locations.
-
+   * Host my implementation in a cloud so scaling is automatic or at least easier.
+   
 ### Part 2
 
 1. My example schema is the following:
@@ -155,8 +156,17 @@ mysimbdp-daas is a simple REST API in Flask and RabbitMQ that receives requests 
    for the dataset, they can quickly find the dataset they need. If, for example, the name or description contain information 
    about the subreddit of each dataset, the user can search for all datasets that contain information about a subreddit, and then choose the one that best fits their 
    needs based on other metadata information, like the size, or how often the dataset is updated.
-2. <mark>to complete</mark>
-3. <mark>to complete</mark>
+2. * **Schema**. These are just ideas of what I could use as schema:
+     > Service id or name: a name or identifier for the service
+     >
+     > host: the location where the service is.
+     >
+     > Owner: the tenant that has permissions over the service
+    * I didn't understand this question completely, but I am assuming that I can add the previous schema in any of the mentioned tools
+    and this will allow tenants to access the dedicated service or host.
+3. My implementation does not use IPs or ports specifically in any code since I am using a Docker network which allows me to use the name of the containers
+   to connect to the service in that container. However, this is not automatic discovery because I have to change 
+   manually the name of the nodes in case they change. To fix it I could use environment variables, or even better, use a technology like Swarm.
 4. Currently, my dataingest is working partly with my daas. The consumers that were configured in dataingest consume the 
    POST requests from the API, I could simply use only the API to do inserts; however at the moment only one value is allowed. 
    I would need to modify the POST route to allow a batch of data.
@@ -173,4 +183,7 @@ mysimbdp-daas is a simple REST API in Flask and RabbitMQ that receives requests 
 
 ### Extra note:
 This project was a real challenge, but I tried to follow most of the things we have learnt in the course so far. Maybe is not
-the best design or implementation, but I will try to improve it in the future.
+the best design or implementation, but I will try to improve it in the future. 
+
+Currently, my project is not secure at all since I am using
+the default users and privileges in all the technologies I used. There's not a lot of data checking nor exception handling.
