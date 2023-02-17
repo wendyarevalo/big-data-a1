@@ -6,7 +6,7 @@ services:
     depends_on:
       - rabbitmq
     deploy:
-      replicas: 10
+      replicas: 4
     networks:
       - bigdata
 
