@@ -1,2 +1,131 @@
-the content of this file should be the output of the log of your own git project for this assignment
-using git log command to export your git log
+commit 763c0911faa3019bce4afee5be815afba5bac220
+Author: Wendy Arevalo <wendyyunuen@hotmail.com>
+Date:   Fri Feb 17 07:49:01 2023 +0200
+
+    answers on part 3
+
+commit ebff86707dae786cbfe6e373fdd2563ab05762e8
+Author: Wendy Arevalo <wendyyunuen@hotmail.com>
+Date:   Fri Feb 17 07:17:05 2023 +0200
+
+    extra tests
+
+commit 5860155375facdc4ff260d9e7f29ede9f48d8a03
+Author: Wendy Arevalo <wendyyunuen@hotmail.com>
+Date:   Fri Feb 17 07:16:55 2023 +0200
+
+    extra tests
+
+commit f69f509f8e4fa6c84f3006da825f5784c7cf8f96
+Author: Wendy Arevalo <wendyyunuen@hotmail.com>
+Date:   Fri Feb 17 06:34:12 2023 +0200
+
+    some answers in extension part
+
+commit 47e42e2e0f09f704bda307ae1eb3fe3ce529d674
+Author: Wendy Arevalo <wendyyunuen@hotmail.com>
+Date:   Fri Feb 17 06:13:36 2023 +0200
+
+    refelction on results.
+
+commit 2bfb60a55aef792c7716317b057879c362f0ca20
+Author: Wendy Arevalo <wendyyunuen@hotmail.com>
+Date:   Fri Feb 17 06:02:01 2023 +0200
+
+    created test, included results in report.
+
+commit 934b2244e6367d70f658b1c2215e7d96aafcb971
+Author: Wendy Arevalo <wendyyunuen@hotmail.com>
+Date:   Fri Feb 17 01:16:38 2023 +0200
+
+    modified schema, added runAll script
+
+commit 94973dad4f586d9b2597af874c0c6a55ad85a1e7
+Author: Wendy Arevalo <wendyyunuen@hotmail.com>
+Date:   Thu Feb 16 21:14:02 2023 +0200
+
+    write some answers in the report
+
+commit c65ce319c2d2017e222a73928f09a90188e1e024
+Author: Wendy Arevalo <wendyyunuen@hotmail.com>
+Date:   Thu Feb 16 19:31:07 2023 +0200
+
+    added some notes to deployment guide
+
+commit 7a50273e23b8149901b77489f6f0a16558c68c07
+Author: Wendy Arevalo <wendyyunuen@hotmail.com>
+Date:   Thu Feb 16 19:25:42 2023 +0200
+
+    added deployment instructions for daas
+
+commit 7a8fd623b71a65c905618ece7be368ad2f16146e
+Author: Wendy Arevalo <wendyyunuen@hotmail.com>
+Date:   Thu Feb 16 16:36:43 2023 +0200
+
+    connected daas to rabbit and cassandra
+
+commit 46b6857ccbb6489e224396975bbdf68a1e1ce34b
+Author: Wendy Arevalo <wendyyunuen@hotmail.com>
+Date:   Thu Feb 16 00:29:27 2023 +0200
+
+    draft daas
+
+commit f252dd07189ecc226418bee7f262736a8906ea33
+Author: Wendy Arevalo <wendyyunuen@hotmail.com>
+Date:   Wed Feb 15 16:06:25 2023 +0200
+
+    created network and containers in docker for consumers and producers
+
+commit 3447c2c9665238b89cfe82996f5bc0c6ef7cc830
+Author: Wendy Arevalo <wendyyunuen@hotmail.com>
+Date:   Wed Feb 15 12:28:35 2023 +0200
+
+    modify rabbitmq consumer insert to cassandra
+
+commit f333efca919eb04ea54b66fc9ac1f3994ff04626
+Author: Wendy Arevalo <wendyyunuen@hotmail.com>
+Date:   Wed Feb 15 12:04:36 2023 +0200
+
+    modify rabbitmq producer json message
+
+commit d25601eec9584027bd4c92c1daffc028d3a524b5
+Author: Wendy Arevalo <wendyyunuen@hotmail.com>
+Date:   Wed Feb 15 11:09:36 2023 +0200
+
+    adding rabbitmq producer
+
+commit 9dc6b80bc1ff07ba7ed6f224da5f460bf1343b07
+Author: Wendy Arevalo <wendyyunuen@hotmail.com>
+Date:   Tue Feb 14 15:59:36 2023 +0200
+
+    adding the design diagram
+
+commit b122e46a77611cfd2db54b8109e045e745971518
+Author: Wendy Arevalo <wendyyunuen@hotmail.com>
+Date:   Mon Feb 13 18:41:03 2023 +0200
+
+    adding cassandra kwy_space and example table
+
+commit 7ccd7acf6ab09e424960efbbcaf6bfb2c9206b49
+Author: Wendy Arevalo <wendyyunuen@hotmail.com>
+Date:   Mon Feb 13 01:59:54 2023 +0200
+
+    adding small sample data
+
+commit 0113086b79e4dc80619e0c8d76f9a52888dab1e6
+Author: Wendy Arevalo <wendyyunuen@hotmail.com>
+Date:   Mon Feb 13 01:35:58 2023 +0200
+
+    draft cassandra setup
+
+commit b7d43172a7ea54e5a85a9a2159f4825e12423717
+Author: Wendy Arevalo <wendyyunuen@hotmail.com>
+Date:   Sun Feb 12 21:37:42 2023 +0200
+
+    draft cassandra setup
+
+commit adcaf89f982c9a4911c332a4c6e88eddb8ead8bc
+Author: Wendy Arevalo <wendyyunuen@hotmail.com>
+Date:   Fri Feb 10 11:12:17 2023 +0200
+
+    Initial commit
