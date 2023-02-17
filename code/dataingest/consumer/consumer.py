@@ -4,7 +4,7 @@ import pika
 import sys
 from cassandra.cluster import Cluster
 
-cluster = Cluster(['cassandra1'])
+cluster = Cluster(['cassandra1', 'cassandra2', 'cassandra3'])
 session = cluster.connect()
 session.execute("CREATE KEYSPACE IF NOT EXISTS reddit WITH REPLICATION = "
                 "{'class': 'SimpleStrategy', "

@@ -70,8 +70,8 @@ mysimbdp-daas is a simple REST API in Flask and RabbitMQ that receives requests 
    > - **score** int, the result of adding up votes and down votes.
    > - **body** text, the content of the comment
 
-   I am using a keyspace called reddit. In Cassandra schemas are designed for specific queries, I have decided to use this schema since it facilitates the "marketing"
-   purposes I mentioned in my domain. The schema can be seen [here.](../code/coredms/conf_cassandra.cql)
+   I am using a keyspace called ***reddit***. In Cassandra schemas are designed for specific queries, I have decided to use this schema since it facilitates the "marketing"
+   purposes I mentioned in my domain. The schema construction can be seen [here.](../code/coredms/conf_cassandra.cql)
 2. * In Cassandra, partitions are made by partition keys which are used to distribute data evenly among the nodes using hashing techniques. My strategy (explained below) works well with my chosen replication
     because Cassandra will internally redirect queries to the correct node using the partition key.
    * My partitioning key is the subreddit of the comment and my clustering keys are the id of the comment and its up votes. I chose this because in Cassandra each table must have only 
@@ -79,7 +79,46 @@ mysimbdp-daas is a simple REST API in Flask and RabbitMQ that receives requests 
 3. * Atomic data element: reddit comment.
    * [In Cassandra write operations are always sent to all replicas](https://cassandra.apache.org/doc/4.0/cassandra/architecture/dynamo.html#tunable-consistency). To achieve consistency in responses I am using *quorum*, 
    this means the majority of the nodes in both datacenters need to respond.
-4. <mark>to complete</mark>
+4. I have tested different ingestion scenarios with variations in the number of nodes and consistency level in Cassandra.
+
+   > **NOTE:** I did not use any tool to test. I changed my docker compose files to have different configurations. 
+   > 
+   > I created a python [script](../code/coredms/test/insertion_test.py) based on the one showed in the [consistency tutorial](https://version.aalto.fi/gitlab/bigdataplatforms/cs-e4640/-/blob/master/tutorials/consistency/test_consistency_write.py) that runs insertions directly to Cassandra. Then I created a container and run N number of replicas with compose.
+   > 
+   > All users are using the same data sample (10,000 rows), Cassandra avoids replication of data and will only update a row if a change is detected.
+   > 
+   > For context, my computer is a MacbookAir with M1 processor and 16 GB of RAM.
+
+   1. **Scenario 1:** *QUORUM consistency*
+      > 3 Cassandra nodes, 2 in DC1 and 1 in DC2 (current).
+      > - 5 users: writing took 33 seconds on average.
+      > - 10 users: writing took 47 seconds on average.
+      > - 100 users: 57 users were able to write all data successfully. The rest timed out. It took 265 seconds on average for each of these users to write.
+
+      > 5 Cassandra nodes, 2 in DC1 and 3 in DC2.
+      > - 5 users: writing took 51 seconds on average.
+      > - 10 users: only 5 users were able to insert all data. Writing took 50 seconds on average.
+      > - 100 users: Two nodes restarted. None of the users was able to insert any data.
+   2. **Scenario 2:** *ALL consistency*
+      > 3 Cassandra nodes, 2 in DC1 and 1 in DC2.
+      > - 5 users: writing took 32 seconds on average.
+      > - 10 users: writing took 36 seconds on average.
+      > - 100 users: 49 users were able to write all the data. It took them 165 seconds on average.
+
+      > 5 Cassandra nodes, 2 in DC1 and 3 in DC2.
+      > - 5 users: writing took 52 seconds on average.
+      > - 10 users: One node restarted, all users failed.
+      > - 100 users: 1 node went down, 1 restarted. All users failed.
+   3. **Scenario 3:** *ONE consistency*
+      > 3 Cassandra nodes, 2 in DC1 and 1 in DC2.
+      > - 5 users: writing took 23 seconds on average.
+      > - 10 users: writing took 27 seconds on average.
+      > - 100 users: 41 users were able to send all the data. It took between 58-115 seconds to complete.
+
+      > 5 Cassandra nodes, 2 in DC1 and 3 in DC2.
+      > - 5 users: writing took 45 seconds on average.
+      > - 10 users: 8 users sent all data. Writing took 108 seconds on average.
+      > - 100 users: 1 node down, 1 restarted. None of the users was able to send the data.
 5. * Adding more nodes to my cluster would help to increase the capacity of the database.
    * If my platform were implemented in a different environment, adding a load balancer would also help to distribute the requests more evenly.
    * Modifying my dataingest, so it uses a different and more advanced technology instead of RabbitMQ, maybe Kafka.

@@ -1,0 +1,14 @@
+version: '3'
+services:
+
+  user:
+    build: .
+    deploy:
+      replicas: 100
+    networks:
+      - bigdata
+
+networks:
+  bigdata:
+    name: bigdata-network
+    external: true

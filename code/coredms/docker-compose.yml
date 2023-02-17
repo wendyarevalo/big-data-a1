@@ -2,7 +2,7 @@ version: '3.4'
 x-cassandra: &cassandras
   CASSANDRA_CLUSTER_NAME: redditCluster
   CASSANDRA_SEEDS: cassandra1
-  HEAP_NEWSIZE: 1M
+  HEAP_NEWSIZE: 2G
   MAX_HEAP_SIZE: 512M
   CASSANDRA_ENDPOINT_SNITCH: GossipingPropertyFileSnitch
     
@@ -61,6 +61,39 @@ services:
       - "9044:9042"
     networks:
       - bigdata
+#
+#  cassandra4:
+#    image: cassandra
+#    hostname: cassandra4
+#    container_name: cassandra4
+#    environment:
+#      <<: *cassandras
+#      CASSANDRA_DC: DC2
+#    expose: *exposes
+#    restart: always
+#    depends_on:
+#      - cassandra1
+#    ports:
+#      - "9045:9042"
+#    networks:
+#      - bigdata
+#
+#  cassandra5:
+#    image: cassandra
+#    hostname: cassandra5
+#    container_name: cassandra5
+#    environment:
+#      <<: *cassandras
+#      CASSANDRA_DC: DC2
+#    expose: *exposes
+#    restart: always
+#    depends_on:
+#      - cassandra1
+#    ports:
+#      - "9046:9042"
+#    networks:
+#      - bigdata
+
 
 networks:
   bigdata:

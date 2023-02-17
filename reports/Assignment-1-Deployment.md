@@ -56,6 +56,7 @@ To run them follow these steps:
    ```
    cp data/small_sample_reddit_comments.csv code/dataingest/producer/sample.csv
    ```
+   You can also transform the data in the Kaggle dataset to csv and create bigger samples (*they need to be in the correct folder and named **sample.csv***). I have tested my environment with up to 500,000 records.
 3. Once the file is in the folder, build and run the producer:
    ```
    docker build -t producer code/dataingest/producer/.
