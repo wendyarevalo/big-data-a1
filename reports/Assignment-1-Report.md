@@ -146,7 +146,20 @@ mysimbdp-daas is a simple REST API in Flask and RabbitMQ that receives requests 
    needs based on other metadata information, like the size, or how often the dataset is updated.
 2. <mark>to complete</mark>
 3. <mark>to complete</mark>
-4. <mark>to complete</mark>
-5. <mark>to complete</mark>
+4. Currently, my dataingest is working partly with my daas. The consumers that were configured in dataingest consume the 
+   POST requests from the API, I could simply use only the API to do inserts; however at the moment only one value is allowed. 
+   I would need to modify the POST route to allow a batch of data.
+5. * ***Use case for mysimbdp-daas***: 
+       * Immediate receptions of new entries for the database, like new comments gathered from the Reddit API.
+       * Using daas would be the most optimal choice because it processes comments one by one and sends them to
+         consumers to distribute in the nodes.
+       * Users could use daas to retrieve data according to their needs, for this more tables and routes would be needed.
+       * Daas is not a good option for sending files, or at least not with the current post route.
+   * ***Use case for mysimbdp-dataingest***:
+      * Using dataingest would be the best option to store historical records, for example old and big files containing comments.
+      * dataingest also works well to discard data that is not correctly formatted.
+      * Users cannot use dataingest to retrieve data since its only task is to ingest data.
 
-### Test results
+### Extra note:
+This project was a real challenge, but I tried to follow most of the things we have learnt in the course so far. Maybe is not
+the best design or implementation, but I will try to improve it in the future.
